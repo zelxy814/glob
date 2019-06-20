@@ -6,7 +6,7 @@
    		<router-link v-bind:to="'/blog/'+blog.id">
    			<h2 v-rainbow>{{blog.title | to-uppercase}}</h2>
    		</router-link>
-   		<article>{{blog.body | snippet}}</article>
+   		<article>{{blog.content | snippet}}</article>
    </div>  
   </div>
 </template>
@@ -23,15 +23,30 @@ export default {
   },
   created(){
   	//https://jsonplaceholder.typicode.com/posts
-  	this.$http.get('https://jsonplaceholder.typicode.com/posts').then(function(data){
+  	/*this.$http.get('https://jsonplaceholder.typicode.com/posts').then(function(data){
   		this.blogs = data.body.slice(0,10);
+  	});*/
+  	// 在firebase中的数据是对象不是数组,将对象放在数组中。
+  	this.$http.get('https://vuedemo-e615b.firebaseio.com/posts.json')
+  	.then(function(data){
+  		console.log(data.json());
+  		return data.json();
+  	}).then(function(data){
+  		var blogArray = [];
+  		for(let key in data){
+  			console.log(key);
+  			console.log(data[key]);
+  			//在firebase中没有id属性
+  			data[key].id = key;
+  			blogArray.push(data[key]);
+  		}
+  		this.blogs = blogArray;
   	});
   },
   computed:{
   	filteredBlog:function(){
   	//在使用filter时需要注意的是，前面调用的是需要使用filter的数组，而给filter函数传入的是数组中的每个item，也就是说filter里面的函数，是每个item要去做的，并将每个结果返回。
   	return this.blogs.filter((blo) => {
-  		//return blog.title.match(this.search);
   		return blo.title.match(this.search)
   	});
   	}

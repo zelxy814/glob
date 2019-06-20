@@ -1,7 +1,7 @@
 <template>
   <div id="add">
    <h2>添加博客</h2>
-   <form v-if="!blog.submitted">
+   <form v-if="!submitted">
    	<label for="">博客标题</label>
    	<input type="text" v-model="blog.title" required>
    	<label for="">博客内容</label>
@@ -18,14 +18,14 @@
    	</div>
    	<label for="">作者：</label>
    	<select v-model="blog.author">
-   		<option v-for="au in blog.authors">
+   		<option v-for="au in authors">
    			{{au}}
    		</option>
    	</select>
    	<!-- 阻止默认事件，防止点击按钮是更新页面 -->
    	<button @click.prevent="post">添加博客</button>
    </form>
-   <div v-if="blog.submitted">
+   <div v-if="submitted">
    	<h3>你的博客发布成功！</h3>
    </div>
    <hr>
@@ -52,24 +52,31 @@ export default {
     		title:"",
     		content:"",
     		categories:[],
-    		author:'',
-    		authors:['Hemiah',"Lee","Ann"],
-    		submitted:false
-    	}
+    		author:''
+    	},
+    	authors:['Hemiah',"Lee","Ann"],
+    	submitted:false
     }
   },
   methods:{
   	post:function(){
   		// 下载 npm install vue-resource --save 就可以使用get post请求了
   			// https://jsonplaceholder.typicode.com/
-  			this.$http.post("https://jsonplaceholder.typicode.com/posts",{
+  			/*将数据传到https://jsonplaceholder.typicode.com/posts，传的都是jsonplaceholder对应的数据*/
+  			/*this.$http.post("https://jsonplaceholder.typicode.com/posts",{
   				title:this.blog.title,
   				body:this.blog.content,
   				userId:1
   			}).then(function(data){
   				console.log(data);
   				this.blog.submitted = true;
+  			});*/
+  			/*将数据传到https://vuedemo-e615b.firebaseio.com/自己创建的数据库*/
+  			this.$http.post("https://vuedemo-e615b.firebaseio.com/posts.json",this.blog).then(function(data){
+  				console.log(data);
+  				this.submitted = true;
   			});
+
   	}
   }
 }

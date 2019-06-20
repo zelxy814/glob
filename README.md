@@ -12,7 +12,9 @@ npm install
 npm run dev
 
 # build for production with minification
-npm run build
+npm run build  
+打包之后就会出现 dist 文件夹，将index.js文件里的 src=/static2 为 src=static  
+然后就可以将你的文件放在服务器上了
 
 # build for production and view the bundle analyzer report
 npm run build --report
