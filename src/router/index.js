@@ -5,6 +5,7 @@ import VueResource from "vue-resource"
 import addBlog from '../components/AddBlog'
 import showBlog from "../components/showBlog"
 import SingleBlog from "../components/SingleBlog"
+import edit from "../components/edit"
 Vue.use(VueRouter)
 Vue.use(VueResource)
 export default new VueRouter({
@@ -20,6 +21,10 @@ export default new VueRouter({
 		{
 			path:"/blog/:id",
 			component:SingleBlog
+		},
+		{
+			path:"/edit/:id",
+			component:edit
 		}
 	],
 	mode:'history'
