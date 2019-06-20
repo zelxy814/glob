@@ -36,7 +36,7 @@
    		<p>{{blog.content}}</p>
    		<p>博客分类:</p>
    		<ul>
-   			<li v-for="category in blog.categories">{{category}}</li>
+   			<li v-for="category in blog.categories" :key="category">{{category}}</li>
    		</ul>
    		<p>作者：{{blog.author}}</p>
    </div>
@@ -44,6 +44,7 @@
 </template>
 
 <script>
+import axios from "axios"
 export default {
   name: 'add',
    data(){
@@ -60,19 +61,8 @@ export default {
   },
   methods:{
   	post:function(){
-  		// 下载 npm install vue-resource --save 就可以使用get post请求了
-  			// https://jsonplaceholder.typicode.com/
-  			/*将数据传到https://jsonplaceholder.typicode.com/posts，传的都是jsonplaceholder对应的数据*/
-  			/*this.$http.post("https://jsonplaceholder.typicode.com/posts",{
-  				title:this.blog.title,
-  				body:this.blog.content,
-  				userId:1
-  			}).then(function(data){
-  				console.log(data);
-  				this.blog.submitted = true;
-  			});*/
-  			/*将数据传到https://vuedemo-e615b.firebaseio.com/自己创建的数据库*/
-  			this.$http.post("https://vuedemo-e615b.firebaseio.com/posts.json",this.blog).then(function(data){
+  		//axios 有this指向问题，用箭头函数
+  			axios.post("https://vuedemo-e615b.firebaseio.com/posts.json",this.blog).then((data)=>{
   				console.log(data);
   				this.submitted = true;
   			});
@@ -88,7 +78,7 @@ export default {
 	}
 	#add{
 		margin: 20px auto;
-		max-width: 800px;
+		max-width: 600px;
 		padding:20px;
 		background: #f5f5f5;
 	}

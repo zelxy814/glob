@@ -12,7 +12,7 @@
 </template>
 
 <script>
-
+import axios from "axios"
 export default {
   name: 'show-blog',
   data(){
@@ -22,21 +22,15 @@ export default {
   	}
   },
   created(){
-  	//https://jsonplaceholder.typicode.com/posts
-  	/*this.$http.get('https://jsonplaceholder.typicode.com/posts').then(function(data){
-  		this.blogs = data.body.slice(0,10);
-  	});*/
   	// 在firebase中的数据是对象不是数组,将对象放在数组中。
-  	this.$http.get('https://vuedemo-e615b.firebaseio.com/posts.json')
+  	axios.get('https://vuedemo-e615b.firebaseio.com/posts.json')
   	.then(function(data){
-  		console.log(data.json());
-  		return data.json();
-  	}).then(function(data){
+  		//console.log(data.data);
+  		return data.data;
+  	}).then((data)=>{
   		var blogArray = [];
   		for(let key in data){
-  			console.log(key);
-  			console.log(data[key]);
-  			//在firebase中没有id属性
+  		//	console.log(data[key]);
   			data[key].id = key;
   			blogArray.push(data[key]);
   		}
@@ -84,7 +78,7 @@ export default {
 
 <style scoped>
 	#show-blog{
-		max-width:800px;
+		max-width:600px;
 		margin: 0 auto;
 	}
 	.single-blog{

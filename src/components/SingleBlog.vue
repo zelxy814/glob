@@ -14,6 +14,7 @@
 	</div>
 </template>
 <script>
+import axios from "axios"
 	export default{
 		name:"single-blog",
 		data(){
@@ -24,22 +25,15 @@
 		},
 		methods:{
 			deleteSingle(){
-				this.$http.delete("https://vuedemo-e615b.firebaseio.com/posts/"+this.id +'.json').then(response=>{
+				axios.delete("https://vuedemo-e615b.firebaseio.com/posts/"+this.id +'.json').then(response=>{
 					this.$router.push({path:"/"});
 				});
 			}
 		},
 		created(){
-			/*this.$http.get('https://jsonplaceholder.typicode.com/posts/'+this.id).then(function(data){
-				this.blog = data.body;
-			})*/
-
-			//https://vuedemo-e615b.firebaseio.com/posts/-Lhno4N7wiSo8mhbxmqo
-			this.$http.get('https://vuedemo-e615b.firebaseio.com/posts/'+this.id +'.json').then(function(data){
-				//console.log(data);
-				return data.json();
-			}).then(function(data){
-				//console.log(data);
+			axios.get('https://vuedemo-e615b.firebaseio.com/posts/'+this.id +'.json').then(function(data){
+				return data.data;
+			}).then((data)=>{
 				this.blog = data;
 			});
 		}

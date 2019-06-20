@@ -6,6 +6,8 @@ import addBlog from '../components/AddBlog'
 import showBlog from "../components/showBlog"
 import SingleBlog from "../components/SingleBlog"
 import edit from "../components/edit"
+import axios from 'axios'
+Vue.prototype.$http = axios
 Vue.use(VueRouter)
 Vue.use(VueResource)
 export default new VueRouter({

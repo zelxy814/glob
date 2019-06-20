@@ -42,7 +42,7 @@ export default {
 	nav{
 		background:crimson;
 		padding: 30px 20px;
-		max-width:800px;
+		width:100%;
 		margin: 0 auto 30px;
 	}
 	.router-link-active{
